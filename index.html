@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Scavenger Hunt</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    a {
+      text-decoration: none;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to the Birthday Scavenger Hunt!</h1>
+
+  <p>To begin, enter the password:</p>
+  <input type="password" id="password">
+  <button onclick="checkPassword()">Enter</button>
+
+  <div id="huntContent" style="display: none;">
+    <p>Congratulations! You've entered the correct password.</p>
+
+    <h2>Page 1: The Hidden Clue</h2>
+
+    <p>Click on the image to find the first clue:</p>
+    <a href="page2.html"><img src="image1.jpg" alt="Image 1"></a> 
+
+    </div>
+
+  <script>
+    function checkPassword() {
+      const passwordInput = document.getElementById("password");
+      const password = passwordInput.value;
+
+      if (password === "your_secret_password") { // Replace with your actual password
+        document.getElementById("huntContent").style.display = "block";
+      } else {
+        alert("Incorrect password. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>
