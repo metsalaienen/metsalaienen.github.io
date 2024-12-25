@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 2</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Page 2: Favorite Day</h2>
+
+  <p>What is your favorite day of the month?</p>
+
+  <select id="daySelect">
+    <option value="">Select</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
+  </select>
+
+  <button onclick="checkDay()">Submit</button>
+
+  <script>
+    function checkDay() {
+      const selectedDay = document.getElementById("daySelect").value;
+
+      if (selectedDay === "14") {
+        window.location.href = "page3.html"; 
+      } else {
+        alert("Incorrect selection. Please try again."); 
+      }
+    }
+  </script>
+
+</body>
+</html>
