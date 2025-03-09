@@ -25,7 +25,20 @@
       // Wait for scroll to finish then execute the rest
       setTimeout(function() {
         clearInterval(intervalID);
+        waitForElements();
+      }, 5000); // Give 5 seconds for scroll to complete. Adjust as needed.
   
+      function waitForElements() {
+        var interval = setInterval(function() {
+          if ($('.styled__EventItemWrapper-sc-4e4b9a69-1').length > 0) {
+            clearInterval(interval);
+            processEvents();
+          }
+        }, 500); // Check every 500ms
+      }
+  
+      function processEvents() {
+        var $ = jQuery.noConflict();
         var clickCount = 0;
         var numDwnld = 0;
         var numRemain = 0;
@@ -64,6 +77,6 @@
         } else {
           console.log("No items selected to download.");
         }
-      }, 5000); // Give 5 seconds for scroll to complete. Adjust as needed.
+      }
     }
   })();
