@@ -47,8 +47,12 @@
       var numDwnld = 0;
       var numRemain = 0;
 
-      // Get all elements and reverse the order
-      var elements = $('.styled__EventItemWrapper-sc-4e4b9a69-1').get().reverse();
+      // Re-fetch and filter out downloaded items
+      var elements = $('.styled__EventItemWrapper-sc-4e4b9a69-1')
+        .filter(function() {
+          return $(this).find('.styled__Container-sc-b2da93fb-0').length === 0; // Filter out downloaded items
+        })
+        .get().reverse();
 
       $(elements).each(function() {
         if (clickCount >= 50) {
@@ -56,17 +60,15 @@
         }
 
         var eventItem = $(this);
-        var cazyZeDiv = eventItem.find('.styled__EventKind-sc-75c658d7-4');
-        var downloadedBadge = eventItem.find('.styled__Container-sc-b2da93fb-0'); // Check for the downloaded badge
-
-        if (downloadedBadge.length === 0) { // If the downloaded badge is not found
-          var checkmarkSpan = eventItem.find('.styled__Checkmark-sc-37715530-1');
-          checkmarkSpan.click();
-          clickCount++;
-        }
+        var checkmarkSpan = eventItem.find('.styled__Checkmark-sc-37715530-1');
+        checkmarkSpan.click();
+        clickCount++;
       });
 
-      $(elements).each(function() {
+      // Re-fetch and filter for counting
+      var allElements = $('.styled__EventItemWrapper-sc-4e4b9a69-1').get().reverse();
+
+      $(allElements).each(function() {
         var eventItem = $(this);
         var downloadedBadge = eventItem.find('.styled__Container-sc-b2da93fb-0'); // Check for the downloaded badge
 
