@@ -47,27 +47,34 @@
       var numDwnld = 0;
       var numRemain = 0;
 
-      // Get all elements and reverse the order
+      // Re-fetch elements on each call
       var elements = $('.styled__EventItemWrapper-sc-4e4b9a69-1').get().reverse();
 
       $(elements).each(function() {
         if (clickCount >= 50) {
           return false; // exit the loop
         }
-        var cazyZeDiv = $(this).find('.styled__EventKind-sc-75c658d7-4'); //get the event type
-        if (cazyZeDiv.length == 0 || !cazyZeDiv.text().includes('Downloaded')) {
-          var checkmarkSpan = $(this).find('.styled__Checkmark-sc-37715530-1');
+
+        var eventItem = $(this);
+        var downloadedBadge = eventItem.find('.styled__Container-sc-b2da93fb-0'); // Check for the downloaded badge
+
+        if (downloadedBadge.length === 0) { // If the downloaded badge is not found
+          var checkmarkSpan = eventItem.find('.styled__Checkmark-sc-37715530-1');
           checkmarkSpan.click();
           clickCount++;
         }
       });
 
+      // Re-fetch elements for counting
+      elements = $('.styled__EventItemWrapper-sc-4e4b9a69-1').get().reverse();
+
       $(elements).each(function() {
-        var cazyZeDiv = $(this).find('.styled__EventKind-sc-75c658d7-4');
-        if (cazyZeDiv.length == 0 || !cazyZeDiv.text().includes('Downloaded')) {
+        var eventItem = $(this);
+        var downloadedBadge = eventItem.find('.styled__Container-sc-b2da93fb-0'); // Check for the downloaded badge
+
+        if (downloadedBadge.length === 0) {
           numRemain++;
-        }
-        if (cazyZeDiv.length != 0 && cazyZeDiv.text().includes('Downloaded')) {
+        } else {
           numDwnld++;
         }
       });
