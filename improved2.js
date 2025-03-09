@@ -25,7 +25,24 @@
       // Wait for scroll to finish then execute the rest
       setTimeout(function() {
         clearInterval(intervalID);
+        waitForElements();
+      }, 5000); // Give 5 seconds for scroll to complete. Adjust as needed.
   
+      function waitForElements() {
+        var interval = setInterval(function() {
+          if ($('.styled__EventItemWrapper-sc-4e4b9a69-1').length > 0) {
+            clearInterval(interval);
+            processDownloadCycle();
+          }
+        }, 500); // Check every 500ms
+      }
+  
+      function processDownloadCycle() {
+        selectAndDownload();
+      }
+  
+      function selectAndDownload() {
+        var $ = jQuery.noConflict();
         var clickCount = 0;
         var numDwnld = 0;
         var numRemain = 0;
@@ -61,9 +78,19 @@
         // Click Download only if items were selected
         if (clickCount > 0) {
           $('[data-testid="manage-events__download"]').click();
+          // Wait for download to start (adjust as needed)
+          setTimeout(deselectAndRepeat, 5000);
         } else {
           console.log("No items selected to download.");
         }
-      }, 5000); // Give 5 seconds for scroll to complete. Adjust as needed.
+      }
+  
+      function deselectAndRepeat() {
+        var $ = jQuery.noConflict();
+        // Click deselect all
+        $('[data-testid="manage-events__deselect-all"]').click();
+        // Wait for deselect to complete (adjust as needed)
+        setTimeout(selectAndDownload, 2000);
+      }
     }
   })();
