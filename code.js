@@ -24,56 +24,54 @@
   
       // Wait for scroll to finish then execute the rest
       setTimeout(function() {
-          clearInterval(intervalID);
-          // Check if anything is already selected
-          var isAnyItemSelected = $('.styled__EventItemWrapper-sc-4e4b9a69-1.xvyWO').find('.hgipWl.checked').length > 0;
+        clearInterval(intervalID);
   
-          // If something is selected, deselect everything first.
-          if (isAnyItemSelected) {
-              $('.styled__EventItemWrapper-sc-4e4b9a69-1.xvyWO').find('.hgipWl.checked').click();
-          }
-  
-          // Click "Select Multiple" to ensure the menu is open.
+        // Check if "Select Multiple" menu is open. If so, close it.
+        if ($('.styled__SelectionOptions-sc-bb521dd1-7').is(':visible')) {
           $('[data-testid="manage-events__select-multiple"]').click();
+        }
   
-          var clickCount = 0;
-          var numDwnld = 0;
-          var numRemain = 0;
+        // Open the "Select Multiple" menu.
+        $('[data-testid="manage-events__select-multiple"]').click();
   
-          // Get all elements and reverse the order
-          var elements = $('.styled__EventItemWrapper-sc-4e4b9a69-1.xvyWO').get().reverse();
+        var clickCount = 0;
+        var numDwnld = 0;
+        var numRemain = 0;
   
-          $(elements).each(function() {
-            if (clickCount >= 50) {
-              return false; // exit the loop
-            }
-            var cazyZeDiv = $(this).find('.cazyZe');
-            if (cazyZeDiv.length == 0 || !cazyZeDiv.text().includes('Downloaded')) {
-              var checkmarkSpan = $(this).find('.hgipWl');
-              checkmarkSpan.click();
-              clickCount++;
-            }
-          });
+        // Get all elements and reverse the order
+        var elements = $('.styled__EventItemWrapper-sc-4e4b9a69-1.xvyWO').get().reverse();
   
-          $(elements).each(function() {
-            var cazyZeDiv = $(this).find('.cazyZe');
-            if (cazyZeDiv.length == 0 || !cazyZeDiv.text().includes('Downloaded')) {
-              numRemain++;
-            }
-            if (cazyZeDiv.length != 0 || cazyZeDiv.text().includes('Downloaded')) {
-              numDwnld++;
-            }
-          });
-  
-          console.log("Downloaded:" + numDwnld);
-          console.log("Remaining To Download:" + numRemain);
-  
-          // Click Download only if items were selected
-          if(clickCount > 0){
-            $('[data-testid="manage-events__download"]').click();
-          } else {
-              console.log("No items selected to download.");
+        $(elements).each(function() {
+          if (clickCount >= 50) {
+            return false; // exit the loop
           }
+          var cazyZeDiv = $(this).find('.cazyZe');
+          if (cazyZeDiv.length == 0 || !cazyZeDiv.text().includes('Downloaded')) {
+            var checkmarkSpan = $(this).find('.hgipWl');
+            checkmarkSpan.click();
+            clickCount++;
+          }
+        });
+  
+        $(elements).each(function() {
+          var cazyZeDiv = $(this).find('.cazyZe');
+          if (cazyZeDiv.length == 0 || !cazyZeDiv.text().includes('Downloaded')) {
+            numRemain++;
+          }
+          if (cazyZeDiv.length != 0 || cazyZeDiv.text().includes('Downloaded')) {
+            numDwnld++;
+          }
+        });
+  
+        console.log("Downloaded:" + numDwnld);
+        console.log("Remaining To Download:" + numRemain);
+  
+        // Click Download only if items were selected
+        if (clickCount > 0) {
+          $('[data-testid="manage-events__download"]').click();
+        } else {
+          console.log("No items selected to download.");
+        }
       }, 5000); // Give 5 seconds for scroll to complete. Adjust as needed.
     }
   })();
